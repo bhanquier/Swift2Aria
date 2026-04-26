@@ -27,6 +27,11 @@ struct PreferencesView: View {
                 .tabItem {
                     Label("Advanced", systemImage: "wrench.and.screwdriver")
                 }
+
+            BrowserExtensionTab()
+                .tabItem {
+                    Label("Extension", systemImage: "puzzlepiece")
+                }
         }
         .frame(width: 560, height: 420)
     }
@@ -442,6 +447,76 @@ struct AdvancedTab: View {
             }
         }
         .padding(.vertical, 4)
+    }
+}
+
+// MARK: - Browser Extension
+
+struct BrowserExtensionTab: View {
+    var body: some View {
+        Form {
+            Section {
+                VStack(alignment: .leading, spacing: 8) {
+                    Label("Chrome Extension", systemImage: "puzzlepiece.fill")
+                        .font(.headline)
+                    Text("Install the companion extension to send downloads directly from your browser.")
+                        .font(.callout)
+                        .foregroundStyle(.secondary)
+                }
+            }
+
+            Section("Installation") {
+                VStack(alignment: .leading, spacing: 12) {
+                    HStack(spacing: 8) {
+                        Text("1")
+                            .font(.caption2.weight(.bold))
+                            .foregroundStyle(.white)
+                            .frame(width: 18, height: 18)
+                            .background(.blue, in: Circle())
+                        Text("Open Chrome and go to the Extensions page")
+                            .font(.callout)
+                    }
+
+                    HStack(spacing: 8) {
+                        Text("2")
+                            .font(.caption2.weight(.bold))
+                            .foregroundStyle(.white)
+                            .frame(width: 18, height: 18)
+                            .background(.blue, in: Circle())
+                        Text("Enable Developer mode (top right)")
+                            .font(.callout)
+                    }
+
+                    HStack(spacing: 8) {
+                        Text("3")
+                            .font(.caption2.weight(.bold))
+                            .foregroundStyle(.white)
+                            .frame(width: 18, height: 18)
+                            .background(.blue, in: Circle())
+                        Text("Click Load unpacked and select the ChromeExtension folder")
+                            .font(.callout)
+                    }
+                }
+            }
+
+            Section {
+                HStack(spacing: 12) {
+                    Button("Show in Finder") {
+                        if let url = Bundle.main.resourceURL?.appendingPathComponent("ChromeExtension"),
+                           FileManager.default.fileExists(atPath: url.path) {
+                            NSWorkspace.shared.selectFile(url.path, inFileViewerRootedAtPath: url.deletingLastPathComponent().path)
+                        }
+                    }
+
+                    Button("Open Chrome Extensions") {
+                        if let url = URL(string: "chrome://extensions/") {
+                            NSWorkspace.shared.open(url)
+                        }
+                    }
+                }
+            }
+        }
+        .formStyle(.grouped)
     }
 }
 

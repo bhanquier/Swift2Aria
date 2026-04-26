@@ -24,6 +24,17 @@
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
+		<key>5CABA7CB</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>folder</string>
+			<key>path</key>
+			<string>ChromeExtension</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
 		<key>8F1A34A2</key>
 		<dict>
 			<key>isa</key>
@@ -113,6 +124,7 @@
 				<string>A0000004</string>
 				<string>B0000004</string>
 				<string>A0000003</string>
+				<string>5CABA7CB</string>
 			</array>
 			<key>isa</key>
 			<string>PBXGroup</string>
@@ -626,6 +638,7 @@
 			<array>
 				<string>A0000209</string>
 				<string>A0000220</string>
+				<string>ABBF07B2</string>
 			</array>
 			<key>isa</key>
 			<string>PBXResourcesBuildPhase</string>
@@ -1004,6 +1017,13 @@
 		<dict>
 			<key>fileRef</key>
 			<string>A0000121</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>ABBF07B2</key>
+		<dict>
+			<key>fileRef</key>
+			<string>5CABA7CB</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
