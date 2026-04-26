@@ -444,31 +444,6 @@ struct SidebarItem: View {
     }
 }
 
-// MARK: - Hashable conformance
-
-extension Download: Hashable {
-    static func == (lhs: Download, rhs: Download) -> Bool { lhs.id == rhs.id }
-    func hash(into hasher: inout Hasher) { hasher.combine(id) }
-}
-
-// MARK: - Formatting helpers
-
-func formatSpeed(_ bytesPerSecond: Int64) -> String {
-    formatBytes(bytesPerSecond) + "/s"
-}
-
-func formatBytes(_ bytes: Int64) -> String {
-    let units = ["B", "KB", "MB", "GB", "TB"]
-    var value = Double(bytes)
-    var unitIndex = 0
-    while value >= 1024 && unitIndex < units.count - 1 {
-        value /= 1024
-        unitIndex += 1
-    }
-    return unitIndex == 0
-        ? "\(Int(value)) \(units[unitIndex])"
-        : String(format: "%.1f %@", value, units[unitIndex])
-}
 
 #Preview {
     ContentView()

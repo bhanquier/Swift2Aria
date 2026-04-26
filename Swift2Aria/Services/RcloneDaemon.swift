@@ -24,6 +24,9 @@ class RcloneDaemon: ObservableObject {
             throw RcloneError.binaryNotFound
         }
 
+        // Clean up stale mount directories from previous runs
+        cleanupStaleMounts()
+
         let proc = Process()
         proc.executableURL = URL(fileURLWithPath: binary)
         proc.arguments = [
@@ -36,9 +39,18 @@ class RcloneDaemon: ObservableObject {
             "--log-level=NOTICE",
         ]
 
-        let pipe = Pipe()
-        proc.standardOutput = pipe
-        proc.standardError = pipe
+        let stdoutPipe = Pipe()
+        let stderrPipe = Pipe()
+        proc.standardOutput = stdoutPipe
+        proc.standardError = stderrPipe
+
+        // Log stderr output
+        stderrPipe.fileHandleForReading.readabilityHandler = { handle in
+            let data = handle.availableData
+            if !data.isEmpty, let str = String(data: data, encoding: .utf8) {
+                print("[rclone] \(str)")
+            }
+        }
 
         proc.terminationHandler = { [weak self] _ in
             DispatchQueue.main.async {
@@ -55,6 +67,18 @@ class RcloneDaemon: ObservableObject {
         process?.terminate()
         process = nil
         isRunning = false
+        // Clean up any leftover mount directories
+        cleanupStaleMounts()
+    }
+
+    private func cleanupStaleMounts() {
+        let tmpDir = "/tmp"
+        let fm = FileManager.default
+        guard let contents = try? fm.contentsOfDirectory(atPath: tmpDir) else { return }
+        for item in contents where item.hasPrefix("aria2mac-mount-") {
+            let path = "\(tmpDir)/\(item)"
+            try? fm.removeItem(atPath: path)
+        }
     }
 
     func findRcloneBinary() -> String? {

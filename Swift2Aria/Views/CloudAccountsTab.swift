@@ -23,7 +23,8 @@ struct CloudAccountsTab: View {
             rcloneSettings
         }
         .sheet(isPresented: $showAddRemote) {
-            AddRemoteSheet(rclone: rclone)
+            AddRemoteSheet()
+                .environmentObject(rclone)
         }
     }
 
@@ -181,7 +182,7 @@ struct CloudAccountsTab: View {
 // MARK: - Add Remote Sheet
 
 struct AddRemoteSheet: View {
-    let rclone: RcloneManager
+    @EnvironmentObject var rclone: RcloneManager
     @Environment(\.dismiss) private var dismiss
 
     @State private var name = ""

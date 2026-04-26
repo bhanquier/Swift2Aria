@@ -56,10 +56,10 @@ class Aria2Daemon: ObservableObject {
             args.append("--all-proxy=\(settings.proxyURL)")
         }
 
-        // Extra user arguments
+        // Extra user arguments (basic shell-like parsing respecting quotes)
         let extra = settings.extraArguments.trimmingCharacters(in: .whitespaces)
         if !extra.isEmpty {
-            args.append(contentsOf: extra.components(separatedBy: " ").filter { !$0.isEmpty })
+            args.append(contentsOf: parseArguments(extra))
         }
 
         proc.arguments = args
@@ -143,4 +143,39 @@ class Aria2Daemon: ObservableObject {
 
         return nil
     }
+}
+
+// MARK: - Argument Parsing
+
+private func parseArguments(_ input: String) -> [String] {
+    var result: [String] = []
+    var current = ""
+    var inQuotes = false
+    var quoteChar: Character?
+
+    for char in input {
+        if char == "\"" || char == "'" {
+            if inQuotes && quoteChar == char {
+                inQuotes = false
+                quoteChar = nil
+            } else if !inQuotes {
+                inQuotes = true
+                quoteChar = char
+            } else {
+                current.append(char)
+            }
+        } else if char.isWhitespace && !inQuotes {
+            if !current.isEmpty {
+                result.append(current)
+                current = ""
+            }
+        } else {
+            current.append(char)
+        }
+    }
+
+    if !current.isEmpty {
+        result.append(current)
+    }
+    return result
 }

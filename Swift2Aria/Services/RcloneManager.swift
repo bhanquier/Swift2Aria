@@ -14,6 +14,8 @@ class RcloneManager: ObservableObject {
     let daemon = RcloneDaemon()
     private(set) var rc: RcloneRC?
     private var pollTimer: Timer?
+    private var consecutiveErrors = 0
+    private let maxConsecutiveErrors = 3
 
     init() {}
 
@@ -104,7 +106,7 @@ class RcloneManager: ObservableObject {
             remotes = newRemotes
             await refreshMounts()
         } catch {
-            // Silently ignore
+            // Best-effort: don't mark disconnected for optional remote listing
         }
     }
 
@@ -139,8 +141,30 @@ class RcloneManager: ObservableObject {
             } else {
                 transfers = []
             }
+
+            consecutiveErrors = 0
+            if !isConnected {
+                isConnected = true
+                error = nil
+            }
         } catch {
-            // Silently ignore
+            consecutiveErrors += 1
+            if consecutiveErrors >= maxConsecutiveErrors {
+                isConnected = false
+                self.error = "Connection to rclone lost"
+                pollTimer?.invalidate()
+                pollTimer = nil
+                attemptReconnect()
+            }
+        }
+    }
+
+    private func attemptReconnect() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) { [weak self] in
+            guard let self else { return }
+            if !self.isConnected {
+                self.connect()
+            }
         }
     }
 

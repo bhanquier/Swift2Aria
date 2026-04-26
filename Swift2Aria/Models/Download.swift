@@ -80,6 +80,11 @@ struct Download: Identifiable {
     }
 }
 
+extension Download: Hashable {
+    static func == (lhs: Download, rhs: Download) -> Bool { lhs.id == rhs.id }
+    func hash(into hasher: inout Hasher) { hasher.combine(id) }
+}
+
 extension Download {
     static let preview = Download(
         id: "abc123",

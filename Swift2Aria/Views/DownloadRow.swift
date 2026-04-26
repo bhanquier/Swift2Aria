@@ -234,15 +234,6 @@ struct DownloadRow: View {
     }
 }
 
-private func formatDuration(_ seconds: Double) -> String {
-    let s = Int(seconds)
-    if s < 60 { return "\(s)s" }
-    if s < 3600 { return "\(s / 60)m \(s % 60)s" }
-    let h = s / 3600
-    let m = (s % 3600) / 60
-    return "\(h)h \(m)m"
-}
-
 // MARK: - Previews
 
 #Preview("All States") {

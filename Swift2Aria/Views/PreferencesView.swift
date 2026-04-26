@@ -280,6 +280,8 @@ struct AdvancedTab: View {
     @EnvironmentObject var settings: AppSettings
     @EnvironmentObject var aria2: Aria2Manager
     @EnvironmentObject var rclone: RcloneManager
+    @State private var aria2cResolvedPath: String?
+    @State private var rcloneResolvedPath: String?
 
     var body: some View {
         Form {
@@ -287,14 +289,14 @@ struct AdvancedTab: View {
                 binaryRow(
                     name: "aria2c",
                     version: aria2.daemon.version,
-                    resolvedPath: aria2.daemon.findAria2cBinary(),
+                    resolvedPath: aria2cResolvedPath,
                     customPath: $settings.aria2cPath
                 )
 
                 binaryRow(
                     name: "rclone",
                     version: rclone.daemon.version,
-                    resolvedPath: rclone.daemon.findRcloneBinary(),
+                    resolvedPath: rcloneResolvedPath,
                     customPath: $settings.rclonePath
                 )
 
@@ -356,6 +358,10 @@ struct AdvancedTab: View {
             }
         }
         .formStyle(.grouped)
+        .onAppear {
+            aria2cResolvedPath = aria2.daemon.findAria2cBinary()
+            rcloneResolvedPath = rclone.daemon.findRcloneBinary()
+        }
     }
 
     @ViewBuilder

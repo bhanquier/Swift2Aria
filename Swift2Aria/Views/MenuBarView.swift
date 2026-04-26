@@ -76,7 +76,7 @@ struct MenuBarView: View {
         ScrollView {
             LazyVStack(spacing: 0) {
                 ForEach(aria2.downloads.prefix(15)) { download in
-                    CompactDownloadRow(download: download, aria2: aria2)
+                    CompactDownloadRow(download: download)
                     if download.id != aria2.downloads.prefix(15).last?.id {
                         Divider().padding(.leading, 52)
                     }
@@ -172,7 +172,7 @@ struct MenuBarView: View {
 
 struct CompactDownloadRow: View {
     let download: Download
-    let aria2: Aria2Manager
+    @EnvironmentObject var aria2: Aria2Manager
 
     var body: some View {
         HStack(spacing: 12) {

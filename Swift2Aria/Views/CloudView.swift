@@ -67,7 +67,7 @@ struct CloudView: View {
             ScrollView {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 200, maximum: 280))], spacing: 12) {
                     ForEach(rclone.remotes) { remote in
-                        RemoteCard(remote: remote, rclone: rclone)
+                        RemoteCard(remote: remote)
                     }
                 }
                 .padding(16)
@@ -101,7 +101,7 @@ struct CloudView: View {
 
 struct RemoteCard: View {
     let remote: CloudRemote
-    let rclone: RcloneManager
+    @EnvironmentObject var rclone: RcloneManager
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {

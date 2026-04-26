@@ -14,6 +14,8 @@ class Aria2Manager: ObservableObject {
     private(set) var rpc: Aria2RPC?
     var rpcClient: Aria2RPC? { rpc }
     private var pollTimer: Timer?
+    private var consecutiveErrors = 0
+    private let maxConsecutiveErrors = 3
 
     private var settings: AppSettings { AppSettings.shared }
 
@@ -92,12 +94,29 @@ class Aria2Manager: ObservableObject {
             globalDownloadSpeed = Int64(stats["downloadSpeed"] as? String ?? "0") ?? 0
             globalUploadSpeed = Int64(stats["uploadSpeed"] as? String ?? "0") ?? 0
 
+            consecutiveErrors = 0
             if !isConnected {
                 isConnected = true
                 error = nil
             }
         } catch {
-            // Silently ignore transient errors during polling
+            consecutiveErrors += 1
+            if consecutiveErrors >= maxConsecutiveErrors {
+                isConnected = false
+                self.error = "Connection to aria2c lost"
+                pollTimer?.invalidate()
+                pollTimer = nil
+                attemptReconnect()
+            }
+        }
+    }
+
+    private func attemptReconnect() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) { [weak self] in
+            guard let self else { return }
+            if !self.isConnected {
+                self.connect()
+            }
         }
     }
 
