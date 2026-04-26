@@ -28,6 +28,10 @@ class Aria2Daemon: ObservableObject {
             .appendingPathComponent("Swift2Aria")
         let sessionFile = appSupport.appendingPathComponent("aria2.session")
         try? FileManager.default.createDirectory(at: appSupport, withIntermediateDirectories: true)
+        // aria2c --input-file requires the file to exist (even if empty)
+        if !FileManager.default.fileExists(atPath: sessionFile.path) {
+            FileManager.default.createFile(atPath: sessionFile.path, contents: nil, attributes: nil)
+        }
 
         let proc = Process()
         proc.executableURL = URL(fileURLWithPath: binary)
