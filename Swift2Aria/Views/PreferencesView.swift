@@ -326,6 +326,10 @@ struct AdvancedTab: View {
                         .textFieldStyle(.roundedBorder)
                         .frame(width: 200)
                 }
+
+                Text("This token secures the local communication between Swift2Aria and the aria2c / rclone daemons. It is generated automatically and stored locally in your Application Support folder.")
+                    .font(.caption)
+                    .foregroundStyle(.tertiary)
             }
 
             Section("File Allocation") {

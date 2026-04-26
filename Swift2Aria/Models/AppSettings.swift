@@ -5,9 +5,6 @@ import ServiceManagement
 class AppSettings: ObservableObject {
     static let shared = AppSettings()
     static let suiteName = "group.com.trustakt.aria2mac"
-    private static let keychainService = "com.trustakt.swift2aria"
-    private static let keychainAccount = "rpcSecret"
-
     private let defaults: UserDefaults
     private var isLoading = false
 
@@ -69,7 +66,7 @@ class AppSettings: ObservableObject {
     @Published var rpcSecret: String = "" {
         didSet {
             if !isLoading {
-                KeychainHelper.save(rpcSecret, service: Self.keychainService, account: Self.keychainAccount)
+                SecretsStore.saveSecret(rpcSecret)
             }
         }
     }
@@ -128,8 +125,7 @@ class AppSettings: ObservableObject {
         globalUploadLimit = defaults.integer(forKey: "globalUploadLimit")
         proxyURL = defaults.string(forKey: "proxyURL") ?? ""
         rpcPort = defaults.object(forKey: "rpcPort") as? Int ?? 6800
-        rpcSecret = KeychainHelper.load(service: Self.keychainService, account: Self.keychainAccount)
-            ?? generateRandomSecret()
+        rpcSecret = SecretsStore.loadSecret() ?? generateRandomSecret()
         aria2cPath = defaults.string(forKey: "aria2cPath") ?? ""
         rclonePath = defaults.string(forKey: "rclonePath") ?? ""
         fileAllocation = FileAllocation(rawValue: defaults.string(forKey: "fileAllocation") ?? "") ?? .falloc
