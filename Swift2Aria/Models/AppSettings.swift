@@ -5,6 +5,8 @@ import ServiceManagement
 class AppSettings: ObservableObject {
     static let shared = AppSettings()
     static let suiteName = "group.com.trustakt.aria2mac"
+    private static let keychainService = "com.trustakt.swift2aria"
+    private static let keychainAccount = "rpcSecret"
 
     private let defaults: UserDefaults
 
@@ -63,8 +65,10 @@ class AppSettings: ObservableObject {
         didSet { defaults.set(rpcPort, forKey: "rpcPort") }
     }
 
-    @Published var rpcSecret: String = "aria2mac" {
-        didSet { defaults.set(rpcSecret, forKey: "rpcSecret") }
+    @Published var rpcSecret: String = "" {
+        didSet {
+            KeychainHelper.save(rpcSecret, service: Self.keychainService, account: Self.keychainAccount)
+        }
     }
 
     @Published var aria2cPath: String = "" {
@@ -118,7 +122,8 @@ class AppSettings: ObservableObject {
         globalUploadLimit = defaults.integer(forKey: "globalUploadLimit")
         proxyURL = defaults.string(forKey: "proxyURL") ?? ""
         rpcPort = defaults.object(forKey: "rpcPort") as? Int ?? 6800
-        rpcSecret = defaults.string(forKey: "rpcSecret") ?? "aria2mac"
+        rpcSecret = KeychainHelper.load(service: Self.keychainService, account: Self.keychainAccount)
+            ?? generateRandomSecret()
         aria2cPath = defaults.string(forKey: "aria2cPath") ?? ""
         rclonePath = defaults.string(forKey: "rclonePath") ?? ""
         fileAllocation = FileAllocation(rawValue: defaults.string(forKey: "fileAllocation") ?? "") ?? .falloc
@@ -159,6 +164,12 @@ class AppSettings: ObservableObject {
             opts["pause"] = "true"
         }
         return opts
+    }
+
+    private func generateRandomSecret() -> String {
+        let length = 32
+        let characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+        return String((0..<length).map { _ in characters.randomElement()! })
     }
 
     private func updateLoginItem() {

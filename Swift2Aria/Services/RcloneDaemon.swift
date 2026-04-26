@@ -11,10 +11,10 @@ class RcloneDaemon: ObservableObject {
     let rcUser: String
     let rcPass: String
 
-    init(port: Int = 5572, user: String = "aria2mac", pass: String = "aria2mac") {
+    init(port: Int = 5572) {
         self.rcPort = port
-        self.rcUser = user
-        self.rcPass = pass
+        self.rcUser = "swift2aria"
+        self.rcPass = AppSettings.shared.rpcSecret
     }
 
     func start() throws {

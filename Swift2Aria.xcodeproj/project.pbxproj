@@ -28,6 +28,24 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
+		<key>9359B776</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>KeychainHelper.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>9EBB06BD</key>
+		<dict>
+			<key>fileRef</key>
+			<string>9359B776</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
 		<key>A0000001</key>
 		<dict>
 			<key>attributes</key>
@@ -112,6 +130,7 @@
 		<dict>
 			<key>children</key>
 			<array>
+				<string>9359B776</string>
 				<string>8F1A34A2</string>
 				<string>A0000100</string>
 				<string>A0000005</string>
@@ -561,6 +580,7 @@
 			<string>2147483647</string>
 			<key>files</key>
 			<array>
+				<string>9EBB06BD</string>
 				<string>138E6369</string>
 				<string>A0000200</string>
 				<string>A0000201</string>
