@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(rclone rc:*)",
+      "Bash(rclone config:*)",
+      "Bash(op --version)",
+      "Bash(op whoami:*)",
+      "Bash(op account:*)",
+      "Bash(op vault:*)",
+      "Bash(createdb cloudrelay:*)",
+      "Read(//opt/homebrew/opt/**)",
+      "Read(//opt/homebrew/Cellar/libpq/18.3/bin/**)",
+      "Bash(/opt/homebrew/opt/libpq/bin/createdb cloudrelay:*)",
+      "Bash(/opt/homebrew/opt/libpq/bin/psql postgresql://trustakt:password@localhost:5432/cloudrelay -c \"SELECT 1\")",
+      "Bash(1 doppler:*)",
+      "Bash(# Move cloudrelay to TrustAkt root\nmv /Users/bhanquier/TrustAkt/Hobbies/cloudrelay /Users/bhanquier/TrustAkt/cloudrelay 2>&1\nls -d /Users/bhanquier/TrustAkt/cloudrelay 2>&1)"
+    ]
+  }
+}

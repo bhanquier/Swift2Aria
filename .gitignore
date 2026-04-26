@@ -1,0 +1,10 @@
+.DS_Store
+DerivedData/
+*.xcuserstate
+xcuserdata/
+build/
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+Swift2Aria/Resources/Binaries/
