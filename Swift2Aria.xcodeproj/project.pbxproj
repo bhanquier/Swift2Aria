@@ -17,6 +17,13 @@
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
+		<key>3F3E7C98</key>
+		<dict>
+			<key>fileRef</key>
+			<string>BCB9352F</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
 		<key>8F1A34A2</key>
 		<dict>
 			<key>isa</key>
@@ -24,7 +31,7 @@
 			<key>lastKnownFileType</key>
 			<string>sourcecode.swift</string>
 			<key>path</key>
-			<string>Formatters.swift</string>
+			<string>Utilities/Formatters.swift</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
@@ -35,7 +42,7 @@
 			<key>lastKnownFileType</key>
 			<string>sourcecode.swift</string>
 			<key>path</key>
-			<string>KeychainHelper.swift</string>
+			<string>Utilities/KeychainHelper.swift</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
@@ -157,6 +164,7 @@
 				<string>A0000111</string>
 				<string>A0000112</string>
 				<string>A0000119</string>
+				<string>BCB9352F</string>
 			</array>
 			<key>isa</key>
 			<string>PBXGroup</string>
@@ -603,7 +611,7 @@
 				<string>A0000216</string>
 				<string>A0000217</string>
 				<string>A0000218</string>
-				<string>A0000219</string>
+				<string>3F3E7C98</string>
 			</array>
 			<key>isa</key>
 			<string>PBXSourcesBuildPhase</string>
@@ -992,13 +1000,6 @@
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
-		<key>A0000219</key>
-		<dict>
-			<key>fileRef</key>
-			<string>A0000120</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
 		<key>A0000220</key>
 		<dict>
 			<key>fileRef</key>
@@ -1274,6 +1275,17 @@
 			<string>B0000010</string>
 			<key>targetProxy</key>
 			<string>B0000400</string>
+		</dict>
+		<key>BCB9352F</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>CloudAccountsTab.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
 		</dict>
 	</dict>
 	<key>rootObject</key>

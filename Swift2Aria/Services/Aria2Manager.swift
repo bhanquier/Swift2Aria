@@ -1,5 +1,6 @@
 import Foundation
 import Combine
+import AppKit
 
 /// Central manager: owns the daemon + RPC client, polls for updates
 @MainActor
