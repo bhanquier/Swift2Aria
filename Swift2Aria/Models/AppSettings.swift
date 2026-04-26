@@ -157,7 +157,6 @@ class AppSettings: ObservableObject {
         let dir = rule.directory.isEmpty ? downloadDirectory : rule.directory
         opts["dir"] = dir
         opts["max-connection-per-server"] = "\(rule.maxConnections)"
-        opts["split"] = "\(rule.maxConnections)"
 
         if rule.speedLimit > 0 {
             opts["max-download-limit"] = "\(rule.speedLimit)K"

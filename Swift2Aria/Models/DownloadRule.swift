@@ -6,7 +6,7 @@ struct DownloadRule: Identifiable, Codable, Hashable {
     var category: Category
     var enabled: Bool = true
     var directory: String = ""       // empty = use global default
-    var maxConnections: Int = 16
+    var maxConnections: Int = 4
     var speedLimit: Int = 0          // KB/s, 0 = unlimited
     var autoStart: Bool = true
 
