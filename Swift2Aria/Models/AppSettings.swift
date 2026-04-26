@@ -79,7 +79,7 @@ class AppSettings: ObservableObject {
         didSet { defaults.set(rclonePath, forKey: "rclonePath") }
     }
 
-    @Published var fileAllocation: FileAllocation = .falloc {
+    @Published var fileAllocation: FileAllocation = .none {
         didSet { defaults.set(fileAllocation.rawValue, forKey: "fileAllocation") }
     }
 
@@ -128,7 +128,7 @@ class AppSettings: ObservableObject {
         rpcSecret = SecretsStore.loadSecret() ?? generateRandomSecret()
         aria2cPath = defaults.string(forKey: "aria2cPath") ?? ""
         rclonePath = defaults.string(forKey: "rclonePath") ?? ""
-        fileAllocation = FileAllocation(rawValue: defaults.string(forKey: "fileAllocation") ?? "") ?? .falloc
+        fileAllocation = FileAllocation(rawValue: defaults.string(forKey: "fileAllocation") ?? "") ?? .none
         extraArguments = defaults.string(forKey: "extraArguments") ?? ""
         loadRules()
     }

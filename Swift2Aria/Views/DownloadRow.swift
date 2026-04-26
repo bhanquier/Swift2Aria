@@ -175,7 +175,11 @@ struct DownloadRow: View {
 
     private var statusLabel: String {
         switch download.status {
-        case .active: return "Downloading"
+        case .active:
+            if download.completedLength == download.totalLength && download.totalLength > 0 {
+                return "Finalizing"
+            }
+            return "Downloading"
         case .waiting: return "Queued"
         case .paused: return "Paused"
         case .complete: return "Complete"
