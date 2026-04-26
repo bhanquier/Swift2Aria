@@ -72,7 +72,7 @@ class ShareViewController: NSViewController {
     /// Send URL to main app via URL scheme
     private func sendToApp(url: String) {
         guard let encoded = url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
-              let appURL = URL(string: "aria2mac://add?url=\(encoded)") else {
+              let appURL = URL(string: "swift2aria://add?url=\(encoded)") else {
             done()
             return
         }

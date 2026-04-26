@@ -138,6 +138,7 @@
 				<string>A0000007</string>
 				<string>A0000008</string>
 				<string>A0000110</string>
+				<string>A0000120</string>
 			</array>
 			<key>isa</key>
 			<string>PBXGroup</string>
@@ -156,7 +157,6 @@
 				<string>A0000111</string>
 				<string>A0000112</string>
 				<string>A0000119</string>
-				<string>A0000120</string>
 			</array>
 			<key>isa</key>
 			<string>PBXGroup</string>
@@ -497,7 +497,9 @@
 				<key>ENABLE_HARDENED_RUNTIME</key>
 				<string>YES</string>
 				<key>GENERATE_INFOPLIST_FILE</key>
-				<string>YES</string>
+				<string>NO</string>
+				<key>INFOPLIST_FILE</key>
+				<string>Swift2Aria/Info.plist</string>
 				<key>INFOPLIST_KEY_CFBundleDisplayName</key>
 				<string>Aria2 Mac</string>
 				<key>INFOPLIST_KEY_LSApplicationCategoryType</key>
@@ -546,7 +548,9 @@
 				<key>ENABLE_HARDENED_RUNTIME</key>
 				<string>YES</string>
 				<key>GENERATE_INFOPLIST_FILE</key>
-				<string>YES</string>
+				<string>NO</string>
+				<key>INFOPLIST_FILE</key>
+				<string>Swift2Aria/Info.plist</string>
 				<key>INFOPLIST_KEY_CFBundleDisplayName</key>
 				<string>Aria2 Mac</string>
 				<key>INFOPLIST_KEY_LSApplicationCategoryType</key>
@@ -845,9 +849,9 @@
 			<key>isa</key>
 			<string>PBXFileReference</string>
 			<key>lastKnownFileType</key>
-			<string>sourcecode.swift</string>
+			<string>text.plist.xml</string>
 			<key>path</key>
-			<string>CloudAccountsTab.swift</string>
+			<string>Info.plist</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>

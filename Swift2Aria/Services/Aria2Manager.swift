@@ -94,6 +94,8 @@ class Aria2Manager: ObservableObject {
             globalDownloadSpeed = Int64(stats["downloadSpeed"] as? String ?? "0") ?? 0
             globalUploadSpeed = Int64(stats["uploadSpeed"] as? String ?? "0") ?? 0
 
+            updateDockBadge()
+
             consecutiveErrors = 0
             if !isConnected {
                 isConnected = true
@@ -118,6 +120,11 @@ class Aria2Manager: ObservableObject {
                 self.connect()
             }
         }
+    }
+
+    private func updateDockBadge() {
+        let activeCount = downloads.filter { $0.status == .active || $0.status == .waiting }.count
+        NSApp.dockTile.badgeLabel = activeCount > 0 ? "\(activeCount)" : nil
     }
 
     // MARK: - Actions
@@ -176,7 +183,7 @@ class Aria2Manager: ObservableObject {
 
     /// Handle aria2mac://add?url=<encoded_url>
     func handleURL(_ url: URL) {
-        guard url.scheme == "aria2mac",
+        guard url.scheme == "swift2aria",
               url.host == "add",
               let components = URLComponents(url: url, resolvingAgainstBaseURL: false),
               let downloadURL = components.queryItems?.first(where: { $0.name == "url" })?.value else {

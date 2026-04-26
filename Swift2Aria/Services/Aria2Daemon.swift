@@ -23,6 +23,12 @@ class Aria2Daemon: ObservableObject {
         }
         print("[Aria2Daemon] Using binary: \(binary)")
 
+        // Ensure Application Support directory exists
+        let appSupport = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
+            .appendingPathComponent("Swift2Aria")
+        let sessionFile = appSupport.appendingPathComponent("aria2.session")
+        try? FileManager.default.createDirectory(at: appSupport, withIntermediateDirectories: true)
+
         let proc = Process()
         proc.executableURL = URL(fileURLWithPath: binary)
 
@@ -44,6 +50,9 @@ class Aria2Daemon: ObservableObject {
             "--bt-enable-lpd=true",
             "--dht-listen-port=6881-6999",
             "--seed-ratio=0",
+            "--save-session=\(sessionFile.path)",
+            "--input-file=\(sessionFile.path)",
+            "--save-session-interval=60",
         ]
 
         if settings.globalDownloadLimit > 0 {
