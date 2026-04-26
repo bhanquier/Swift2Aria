@@ -9,6 +9,7 @@ class AppSettings: ObservableObject {
     private static let keychainAccount = "rpcSecret"
 
     private let defaults: UserDefaults
+    private var isLoading = false
 
     init() {
         // Use App Group UserDefaults when signing is configured, standard otherwise
@@ -67,7 +68,9 @@ class AppSettings: ObservableObject {
 
     @Published var rpcSecret: String = "" {
         didSet {
-            KeychainHelper.save(rpcSecret, service: Self.keychainService, account: Self.keychainAccount)
+            if !isLoading {
+                KeychainHelper.save(rpcSecret, service: Self.keychainService, account: Self.keychainAccount)
+            }
         }
     }
 
@@ -111,6 +114,9 @@ class AppSettings: ObservableObject {
     // MARK: - Persistence
 
     private func load() {
+        isLoading = true
+        defer { isLoading = false }
+
         launchAtLogin = defaults.bool(forKey: "launchAtLogin")
         showInDock = defaults.bool(forKey: "showInDock")
         downloadDirectory = defaults.string(forKey: "downloadDirectory")
